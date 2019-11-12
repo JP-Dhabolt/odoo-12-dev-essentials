@@ -18,7 +18,10 @@ class Checkout(models.Model):
         "library.checkout.line", "checkout_id", string="Borrowed Books"
     )
     checkout_date = fields.Date(readonly=True)
-    close_date = fields.Date(readonly=True)
+    closed_date = fields.Date(readonly=True)
+    member_image = fields.Binary(related="member_id.partner_id.image")
+    num_other_checkouts = fields.Integer(compute="_compute_num_other_checkouts")
+    num_books = fields.Integer(compute="_compute_num_books", store=True)
 
     @api.model
     def create(self, vals):
@@ -36,7 +39,7 @@ class Checkout(models.Model):
             )
         return new_record
 
-    @api.model
+    @api.multi
     def write(self, vals):
         # Code before write: can use `self`, with the old values
         if "stage_id" in vals:
@@ -75,6 +78,27 @@ class Checkout(models.Model):
                     "message": "Request date changed to today.",
                 }
             }
+
+    def button_done(self):
+        Stage = self.env[stage_model]
+        done_stage = Stage.search([("state", "=", "done")], limit=1)
+        for checkout in self:
+            checkout.stage_id = done_stage
+        return True
+
+    def _compute_num_other_checkouts(self):
+        for checkout in self:
+            domain = [
+                ("member_id", "=", checkout.member_id.id),
+                ("state", "in", ["open"]),
+                ("id", "!=", checkout.id),
+            ]
+            checkout.num_other_checkouts = self.search_count(domain)
+
+    @api.depends("line_ids")
+    def _compute_num_books(self):
+        for checkout in self:
+            checkout.num_books = len(checkout.line_ids)
 
 
 class CheckoutLine(models.Model):
