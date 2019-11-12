@@ -8,5 +8,7 @@ pre-commit = {version = "*",index = "pypi"}
 setuptools = {version = "*",index = "pypi"}
 twine = {version = "*",index = "pypi"}
 setuptools-odoo = {version = "*",index = "pypi"}
+ipdb = "*"
+watchdog = "*"
 
 [packages]

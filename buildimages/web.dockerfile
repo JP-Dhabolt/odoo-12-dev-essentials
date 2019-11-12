@@ -11,4 +11,4 @@ RUN pipenv sync --dev
 
 EXPOSE 8069
 
-CMD pipenv run odoo -c /odoo-dev/addon/config/odoo.conf
+CMD pipenv run odoo -c /odoo-dev/addon/config/odoo.conf --dev=all
