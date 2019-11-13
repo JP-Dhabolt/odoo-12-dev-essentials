@@ -5,7 +5,14 @@
 
     <!-- Action to open the Book list -->
     <act_window id="action_library_book" name="Library Books" res_model="library.book" view_mode="tree,form"/>
+<!--    Action to open the Book SQL List (to verify SQL Report only)-->
+    <act_window id="action_library_book_sql"
+                name="Library Books SQL"
+                res_model="library.book.report"
+                view_mode="tree" />
 
     <!-- Menu item to open the Book List -->
     <menuitem id="menu_library_book" name="Books" parent="menu_library" action="action_library_book" />
+<!--    Menu item to open the Book SQL List-->
+    <menuitem id="menu_library_book_sql" name="Books SQL" parent="menu_library" action="action_library_book_sql" />
 </odoo>

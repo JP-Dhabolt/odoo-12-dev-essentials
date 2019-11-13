@@ -11,6 +11,7 @@
         "views/library_menu.xml",
         "views/book_view.xml",
         "views/book_list_template.xml",
+        "reports/library_book_report.xml",
     ],
     "demo": ["demo/res.partner.csv", "demo/library.book.csv", "demo/book_demo.xml"],
 }
