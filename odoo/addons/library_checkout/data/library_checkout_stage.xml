@@ -14,10 +14,12 @@
         <field name="name">Completed</field>
         <field name="sequence">90</field>
         <field name="state">done</field>
+        <field name="fold">True</field>
     </record>
     <record id="stage_95" model="library.checkout.stage">
         <field name="name">Cancelled</field>
         <field name="sequence">95</field>
         <field name="state">cancel</field>
+        <field name="fold">True</field>
     </record>
 </odoo>
