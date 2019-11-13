@@ -22,6 +22,19 @@ class Checkout(models.Model):
     member_image = fields.Binary(related="member_id.partner_id.image")
     num_other_checkouts = fields.Integer(compute="_compute_num_other_checkouts")
     num_books = fields.Integer(compute="_compute_num_books", store=True)
+    color = fields.Integer("Color Index")
+    priority = fields.Selection(
+        [("0", "Low"), ("1", "Normal"), ("2", "High")], "Priority", default="1"
+    )
+    kanban_state = fields.Selection(
+        [
+            ("normal", "In Progress"),
+            ("blocked", "Blocked"),
+            ("done", "Ready for the next stage"),
+        ],
+        "Kanban State",
+        default="normal",
+    )
 
     @api.model
     def create(self, vals):
